@@ -43,7 +43,8 @@ public class MainScript : MonoBehaviour
         {
             LosingAudioManager.instance.PlayLoseSound(); // Play the lose sound
             losePanel.SetActive(true);
-            ordFailed.text = "Orders Failed: " + angry.ToString();
+            ordFailed.gameObject.SetActive(true);
+            ordFailed.text = "Orders Passed: " + angry.ToString();
         }
         //checking what ingredients player wants to add to the sandwich
         if (Input.GetMouseButtonDown(0)) // Left-click
