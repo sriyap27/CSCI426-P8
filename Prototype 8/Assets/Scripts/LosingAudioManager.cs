@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+public class LosingAudioManager : MonoBehaviour
 {
-    public static AudioManager instance; // Singleton instance
+    public static LosingAudioManager instance; // Singleton instance
     private AudioSource audioSource;
     public AudioClip loseSound; // Drag and drop the lose sound in Inspector
 
@@ -39,7 +39,7 @@ public class AudioManager : MonoBehaviour
  
  if (ordersPassed >= 3)
 {
-    AudioManager.instance.PlayLoseSound(); // Play the lose sound
+    LosingAudioManager.instance.PlayLoseSound(); // Play the lose sound
 }
 
 
