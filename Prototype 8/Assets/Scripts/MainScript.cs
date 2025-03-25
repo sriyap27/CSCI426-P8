@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class MainScript : MonoBehaviour
 {
@@ -16,7 +17,9 @@ public class MainScript : MonoBehaviour
     public GameObject[] ingredients;
     public GameObject orderDisp;
     public GameObject[] sandwichOrd;
+    public GameObject losePanel;
     public Button orderUp;
+    public TMP_Text ordFailed;
     int ordersPassed = 0;
     int angry = 0;
     float dispTime = 2f;
@@ -25,6 +28,8 @@ public class MainScript : MonoBehaviour
     {
         Randomize();
         orderUp.onClick.AddListener(CheckOrder);
+        losePanel.SetActive(false);
+        ordFailed.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -36,7 +41,9 @@ public class MainScript : MonoBehaviour
         }
         if (ordersPassed >= 3)
         {
-            //display some sort of fail screen
+            LosingAudioManager.instance.PlayLoseSound(); // Play the lose sound
+            losePanel.SetActive(true);
+            ordFailed.text = "Orders Failed: " + angry.ToString();
         }
         //checking what ingredients player wants to add to the sandwich
         if (Input.GetMouseButtonDown(0)) // Left-click
@@ -107,7 +114,7 @@ public class MainScript : MonoBehaviour
             }
         }
         yield return new WaitForSeconds(dispTime);
-        dispTime = Mathf.Max(dispTime * 0.95f, 0.5f); // Ensure minimum 0.5s
+        dispTime = Mathf.Max(dispTime * 0.95f, 0.2f); // Ensure minimum 0.2s
         orderDisp.SetActive(false);
 
     }
