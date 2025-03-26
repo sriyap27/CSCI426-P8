@@ -20,6 +20,8 @@ public class MainScript : MonoBehaviour
     public GameObject losePanel;
     public Button orderUp;
     public TMP_Text ordFailed;
+    public Slider progressBar; // ****
+    public AudioSource loseSound; // ****
     int ordersPassed = 0;
     int angry = 0;
     float dispTime = 2f;
@@ -30,6 +32,12 @@ public class MainScript : MonoBehaviour
         orderUp.onClick.AddListener(CheckOrder);
         losePanel.SetActive(false);
         ordFailed.gameObject.SetActive(false);
+
+        // Initialize progress bar ****
+        progressBar.maxValue = 3; // Max orders needed to win
+        progressBar.value = 0; // Start at 0
+
+        progressBar.gameObject.SetActive(true); // sctivate progress bar ****
     }
 
     // Update is called once per frame
@@ -41,7 +49,12 @@ public class MainScript : MonoBehaviour
         }
         if (ordersPassed >= 3)
         {
-            LosingAudioManager.instance.PlayLoseSound(); // Play the lose sound
+            // ****
+            if (!loseSound.isPlaying) // Ensure it doesn't play multiple times
+            {
+                loseSound.Play();
+            }
+
             losePanel.SetActive(true);
             ordFailed.gameObject.SetActive(true);
             ordFailed.text = "Orders Passed: " + angry.ToString();
@@ -134,6 +147,7 @@ public class MainScript : MonoBehaviour
         if (passedOrder)
         {
             ordersPassed++;
+            progressBar.value = ordersPassed; // Update progress bar ****
         }
         else angry++;
         Debug.Log("orders passed: " + ordersPassed);
